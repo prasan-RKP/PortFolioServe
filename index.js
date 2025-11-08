@@ -11,6 +11,7 @@ import authRoutes from '../server/src/routes/authRoute.js'
 const app = express();
 
 const PORT = process.env.PORT || 3008;
+const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json({limit: "10mb"}));
 app.use(cookieParser());
@@ -19,7 +20,10 @@ app.use(cors({
     credentials: true
 }))
 
-mongoose.connect("mongodb://127.0.0.1:27017/3D-portfolio")
+mongoose.connect(MONGO_URI, {
+useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 .then(()=> {
     console.log(`successfully connected to ${mongoose.connection.name}✅`);
 
